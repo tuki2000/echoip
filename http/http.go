@@ -216,6 +216,16 @@ func (s *Server) CLIASNHandler(w http.ResponseWriter, r *http.Request) *appError
 	return nil
 }
 
+func (s *Server) CLIASNORGHandler(w http.ResponseWriter, r *http.Request) *appError {
+	response, err := s.newResponse(r)
+	if err != nil {
+		return internalServerError(err)
+	}
+	fmt.Fprintf(w, "%s\n", response.ASNOrg)
+	return nil
+}
+
+
 func (s *Server) JSONHandler(w http.ResponseWriter, r *http.Request) *appError {
 	response, err := s.newResponse(r)
 	if err != nil {
@@ -349,6 +359,7 @@ func (s *Server) Handler() http.Handler {
 		r.Route("GET", "/city", s.CLICityHandler)
 		r.Route("GET", "/coordinates", s.CLICoordinatesHandler)
 		r.Route("GET", "/asn", s.CLIASNHandler)
+		r.Route("GET", "/asnorg", s.CLIASNORGHandler)
 	}
 
 	// Browser
